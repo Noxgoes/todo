@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-frame">
+    <aside class="sidebar">
+      <a class="brand" href="#app-title" aria-label="TaskFlow home">
+        <span class="brand-mark">✓</span>
+        <span>
+          <strong>TaskFlow</strong>
+          <small>Your tasks, your way.</small>
+        </span>
+      </a>
+
+      <nav class="side-nav" aria-label="Task filters">
+        <button class="nav-filter active" type="button" data-filter="all">
+          <span class="nav-icon">□</span>
+          <span>All Tasks</span>
+          <strong id="nav-total">0</strong>
+        </button>
+        <button class="nav-filter" type="button" data-filter="active">
+          <span class="nav-icon">○</span>
+          <span>Active</span>
+          <strong id="nav-active">0</strong>
+        </button>
+        <button class="nav-filter" type="button" data-filter="completed">
+          <span class="nav-icon">✓</span>
+          <span>Completed</span>
+          <strong id="nav-completed">0</strong>
+        </button>
+      </nav>
+
+      <section class="priority-panel" aria-label="Priority summary">
+        <h2>Priority</h2>
+        <p><span class="dot high"></span>High <strong id="high-count">0</strong></p>
+        <p><span class="dot medium"></span>Medium <strong id="medium-count">0</strong></p>
+        <p><span class="dot low"></span>Low <strong id="low-count">0</strong></p>
+      </section>
+
+      <section class="quick-card">
+        <h2>Quick Stats</h2>
+        <div class="mini-progress">
+          <span id="mini-progress-bar"></span>
+          <strong id="mini-progress-percent">0%</strong>
+        </div>
+        <p><strong>Completion</strong><span id="mini-progress-label">0 of 0 tasks</span></p>
+      </section>
+
+      <section class="tip-card">
+        <span>!</span>
+        <div>
+          <h2>Focus Tip</h2>
+          <p>Small daily progress leads to big results.</p>
+        </div>
+      </section>
+    </aside>
+
+    <section class="workspace" aria-labelledby="app-title">
+      <header class="topbar">
+        <div>
+          <h1 id="app-title">Good evening!</h1>
+          <p>Here&apos;s what needs your attention today.</p>
+        </div>
+        <label class="top-search" for="search-input">
+          <span>Search</span>
+          <input id="search-input" type="search" placeholder="Search tasks...">
+        </label>
+        <button class="add-open-button" type="button" id="focus-task-input">+ Add Task</button>
+      </header>
+
+      <section class="stats-grid" aria-label="Task summary">
+        <article class="stat-card">
+          <span class="stat-icon clipboard">▦</span>
+          <div>
+            <p>Total Tasks</p>
+            <strong id="total-count">0</strong>
+            <small>All your tasks</small>
+          </div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon active">◷</span>
+          <div>
+            <p>Active Tasks</p>
+            <strong id="active-count">0</strong>
+            <small>Tasks in progress</small>
+          </div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon done">✓</span>
+          <div>
+            <p>Completed Tasks</p>
+            <strong id="completed-count">0</strong>
+            <small>Tasks completed</small>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="donut" id="completion-donut"><span></span></div>
+          <div>
+            <p>Completion Rate</p>
+            <strong id="progress-percent">0%</strong>
+            <small>Keep going!</small>
+          </div>
+        </article>
+      </section>
+
+      <form class="task-form" id="task-form" autocomplete="off">
+        <div class="input-group task-title-field">
+          <label for="task-input">Task</label>
+          <input id="task-input" type="text" placeholder="Write the next action..." maxlength="120" required>
+        </div>
+        <div class="input-group">
+          <label for="priority-input">Priority</label>
+          <select id="priority-input">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="due-input">Due Date</label>
+          <input id="due-input" type="date">
+        </div>
+        <button type="submit">Save Task</button>
+      </form>
+
+      <section class="list-panel">
+        <div class="list-toolbar">
+          <div class="toolbar" aria-label="Task filters">
+            <button class="filter-button active" type="button" data-filter="all">All</button>
+            <button class="filter-button" type="button" data-filter="active">Active</button>
+            <button class="filter-button" type="button" data-filter="completed">Completed</button>
+          </div>
+          <button class="text-button" id="clear-completed" type="button">Clear completed</button>
+        </div>
+
+        <p class="task-count" id="task-count">0 active tasks</p>
+        <ul class="task-list" id="task-list" aria-live="polite"></ul>
+      </section>
+    </section>
+  </main>
+
+  <template id="task-template">
+    <li class="task-item">
+      <label class="task-check">
+        <input type="checkbox" data-action="toggle">
+        <span></span>
+      </label>
+      <form class="edit-form">
+        <input type="text" maxlength="120" data-action="edit-input">
+      </form>
+      <div class="task-meta">
+        <span class="priority-pill"></span>
+        <span class="due-pill"></span>
+      </div>
+      <div class="task-actions">
+        <button class="icon-button" type="button" data-action="edit" aria-label="Edit task">✎</button>
+        <button class="icon-button danger" type="button" data-action="delete" aria-label="Delete task">⌫</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
